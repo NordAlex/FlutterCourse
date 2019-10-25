@@ -1,0 +1,23 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2019-06-21T16:29:44+03:00",
+  "id": "2",
+  "duration": 0,
+  "title": "Lecture 2 - Widgets",
+  "summary": "Flutter lecture #2",
+  "source": "lecture2.md",
+  "theme": "",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "tutorial"
+  ],
+  "tags": [
+    "dart"
+  ],
+  "url": "2"
+}

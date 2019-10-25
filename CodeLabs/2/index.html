@@ -1,0 +1,328 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Lecture 2 - Widgets</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="2"
+                  title="Lecture 2 - Widgets"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Application structure" duration="0">
+        <p class="image-container"><img alt="New app structure" src="img/5418708c7962322f.png"></p>
+<p>Flutter project contains several main folders:</p>
+<ol type="1">
+<li><code>android</code> - contains necessary info for building an application for Android.</li>
+<li><code>ios</code> - contains necessary info for building an application for iOS.</li>
+<li><code>test</code> - contains code for tests in the application. Keeping all code for tests in one place allows us to simply navigate between app code and tests code.</li>
+<li><code>lib</code> - contains application code. The main folder in development.</li>
+</ol>
+<p>Later in this course, we will check content in <code>android</code> and <code>ios</code> folders and add tests to <code>test</code> folder.</p>
+<p>Our development process starts from <code>main.dart</code> file in <code>lib</code> folder.</p>
+<p>All our code will be located in subfolders of <code>lib</code> folder. A best practice is creating folders for grouping elements in some way. That&#39;s why with the growing of app we will get different folders for screens in an app, some tools, models, etc. It will be understandable step by step.</p>
+<p>Let&#39;s look at the generated project. Open <code>main.dart</code> file. Here we can see <code>main</code> method which creates an instance of class <code>MyApp</code>.</p>
+<p><code>MyApp</code> extends <code>StatelessWidget</code> and we should start from understanding what is Widget in Flutter.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="What is a widget" duration="0">
+        <p>Widget - is everything in Flutter...</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Why" duration="0">
+        <p>Widget is the smallest and the biggest part of the application. Widget contains widgets and can be part of another widget.<br>Application is a widget. Each screen in the app is a widget. Each element on the screen is a widget. Text is a widget, a button is a widget, image is a widget, etc.</p>
+<p>Shortly, Widget is a regular Dart class.<br><code>build</code> method is very important for Widget. <code>StatelessWidget</code> contains <code>build</code> in class declaration:</p>
+<pre><code>class TheCoolestWidget extends StatelessWidget {
+    @override
+    Widget build(context) {
+        return Text(&#39;Cool text&#39;);
+    }
+}
+</code></pre>
+<p>As you can see in the example - <code>build</code> method returns another widget <code>Text</code>.</p>
+<p><a href="https://api.flutter.dev/flutter/widgets/Text-class.html" target="_blank">Text</a> is one of the basic Flutter widgets. This widget lets us create styled text within our application.</p>
+<p>As a result - our screens is a big tree from widgets.</p>
+<p class="image-container"><img alt="Widget tree" src="img/b0bba62f76652b77.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Widget class" duration="0">
+        <p>If a widget is a class, it means that we can easily add properties and methods.</p>
+<pre><code>class TheCoolestWidget extends StatelessWidget {
+    // a property
+    final String coolText;
+
+    // a constructor
+    TheCoolestWidget(this.coolText);
+
+    Widget build(context) {
+        return Text(coolText);
+    }
+}
+</code></pre>
+<p>As a result, we can add our new widget:</p>
+<pre><code>/// ...
+/// Somewhere in another widget
+child: TheCoolestWidget(&#39;Cool text&#39;),
+/// ...
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Stateful vs stateless" duration="0">
+        <p>In the previous part, our widget is <code>extend</code> of StatelessWidget. Stateless widget cannot redraw itself in the case when his property of any condition changes. In this case, the app should always draw a new widget instead of the old one.</p>
+<p>It is good for small widget as <a href="https://api.flutter.dev/flutter/widgets/Text-class.html" target="_blank">Text</a> or <a href="https://api.flutter.dev/flutter/widgets/Image-class.html" target="_blank">Image</a>. A good rule, in this case, does not add any business logic to stateless widget.</p>
+<p>If widget never changes - it is stateless widget!</p>
+<p>But when we create complex UI in an application we often have a situation when it should react to different events such as user actions, etc. For this case, we should use Stateful widget.</p>
+<p>The previous code shows how to create stateless widget. Stateful widget is a complex object from 2 classes. First one is widget class - extension class to <code>StatefulWidget</code> class. The second one is State - additional object for keeping widget parameters and build a widget. In this case, our <code>build</code> method migrate from widget class to state class.</p>
+<pre><code>class TheCoolestWidget extends StatefulWidget {
+    @override
+    State&lt;StatefulWidget&gt; createState() {
+        return _TheCoolestWidgetState();
+    }
+}
+
+class _TheCoolestWidgetState extends State&lt;TheCoolestWidget&gt; {
+    @override
+    Widget build(context) {
+        return new Text(&#39;Cool text&#39;);
+    }
+}
+</code></pre>
+<p>As we can see - <code>build</code> method is the same but now it is located in state class. Additionally, we have new method <code>createState()</code> in our widget class. Good practice keep Widget&#39;s class and state&#39;s class in one file. Additionally, start state name from <code>_</code>, after Widget&#39;s name and <code>State</code> end.</p>
+<p>At current step - functionality for Statefull and Stateless widget look the same. For going deeper we should look at the standard widget catalog and found widget for creating user interaction handling in our app.</p>
+<p>Getting this base knowledge it is high time to review standard widgets.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Widget catalog" duration="0">
+        <p><a href="https://flutter.dev/docs/development/ui/widgets" target="_blank">Widget catalog</a> the main catalog for standard widgets. Here we can find:</p>
+<ol type="1">
+<li><a href="https://api.flutter.dev/flutter/material/MaterialApp-class.html" target="_blank">MaterialApp</a> is the main widget in our widgets tree. We need it for creating an app with material design.</li>
+<li><a href="https://api.flutter.dev/flutter/material/Scaffold-class.html" target="_blank">Scaffold</a> implements the basic material design visual layout structure. For us, it means that we are able easily to add a top bar, the main body for the screen, etc.</li>
+<li><a href="https://api.flutter.dev/flutter/widgets/Text-class.html" target="_blank">Text</a>, <a href="https://api.flutter.dev/flutter/widgets/Image-class.html" target="_blank">Image</a>, <a href="https://api.flutter.dev/flutter/material/RaisedButton-class.html" target="_blank">Raised button</a>, etc - base widget for showing content and handle user actions.</li>
+<li><a href="https://flutter.dev/docs/development/ui/widgets/layout" target="_blank">Layout widgets</a> - helper widgets for putting widgets in the correct places on the device&#39;s screen.</li>
+</ol>
+<p><a href="https://api.flutter.dev/flutter/widgets/widgets-library.html" target="_blank">Widget library</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Material and Cupertino widgets" duration="0">
+        <p>As a developer, we should understand that Google material design and Apple design have a little bit different concepts in some cases. It is better to start from reviewing design guidelines for iOS and for Android:</p>
+<ol type="1">
+<li><a href="https://material.io/design/" target="_blank">Material design from Google</a></li>
+<li><a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank">Apple design</a></li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="TODO app" duration="0">
+        <h2 is-upgraded>FirstStep</h2>
+<ol type="1">
+<li>The first step is always the same - create the project. We learn how to do it in the previous lecture. So, just do it!</li>
+<li>We recommend, do not create an app in one file. It is high time to create a separate folder for our widgets and create a file for our main widget.<br><img alt="App structure" src="img/2a22f7da11738f6b.png"></li>
+<li>Now in <code>todo_list_widget.dart</code> we create our widget. We should start by selecting between stateless and stateful variants. For it, we analyze our target. We want to have a list of our todo actions and ability to create a new one. For just showing the list of actions we can use stateless widget but when we speak about the ability to add a new one - it is changing the state of data in the app. That&#39;s why we need stateful solution.</li>
+</ol>
+<h2 is-upgraded>The second</h2>
+<ol type="1">
+<li>Create classes for the widget and for the state.<pre><code>class TodoList extends StatefulWidget {
+@override
+State&lt;StatefulWidget&gt; createState() {
+return TodoListState();
+}
+}
+
+class TodoListState extends State&lt;TodoList&gt; {
+@override
+Widget build(BuildContext context) {
+return Container();
+}
+}
+</code></pre>
+</li>
+<li>Now we analyze what is todo action. In the current app, it is just a string. Add a list of string items to the app. As we create app step by step, we put some default values to list:<pre><code>List&lt;String&gt; items = [&#39;Item 1&#39;, &#39;Item 2&#39;, &#39;Item 3&#39;];
+</code></pre>
+</li>
+<li>Next step - adding basic page structure. For it, we are using <code>Scaffold</code> widget and add to <code>AppBar</code> title of application as a title for this page. And we add some text for the body to check how it works:<pre><code>@override
+Widget build(BuildContext context) {
+return Scaffold(
+  appBar: AppBar(title: Text(&#34;Todo list&#34;)),
+  body: Text(&#34;Test text&#34;)
+  );
+}
+</code></pre>
+</li>
+<li>Cool! Now we have our widget. Before it starts to show our list we should show this widget in our app. That&#39;s why we come back to <code>main.dart</code> file. Remove all generated code from that file and put our widget to home parameter. Do not forget to import our widget file to <code>main.dart</code>:<pre><code>class MyApp extends StatelessWidget {
+// This widget is the root of your application.
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+  title: &#39;Todo List&#39;,
+  theme: ThemeData(
+    primarySwatch: Colors.blue,
+  ),
+  home: TodoList(),
+);
+}
+}
+</code></pre>
+</li>
+<li>It is high time to show our list. We don&#39;t wont to show &#34;antipattern&#34; spaghetti-code in our app. So, create a separate method for building the body of <code>Scaffold</code>:<pre><code>Widget _buildList() {
+return Containter();
+}
+</code></pre>
+</li>
+<li>For viewing list, we will use... <code>ListView</code>. Unexpectedly... indeed. After a little research in <a href="https://api.flutter.dev/flutter/widgets/ListView-class.html" target="_blank">ListView documentation</a> we understand that we need <code>builder</code>. We build our items as just <code>Text</code> widgets with <code>Padding</code>:<pre><code>Widget _buildList() {
+return ListView.builder(
+  itemCount: items.length,
+  itemBuilder: (BuildContext ctxt, int index) {
+          return ListTile(title: Text(items[index]));
+              }
+              );
+}
+</code></pre>
+</li>
+<li>Now we can see our list. And we should add the ability for adding new items. Hmm... We have a perfect pattern from material design - a floating button. From <a href="https://api.flutter.dev/flutter/material/Scaffold-class.html" target="_blank">Scaffold documentation</a> we know that we can add <code>floatingActionButton</code> parameter. Use our previous style and move button action to separate method:<pre><code>@override
+Widget build(BuildContext context) {
+return Scaffold(
+  appBar: AppBar(title: Text(&#34;Todo list&#34;)),
+  body: _buildList(),
+  floatingActionButton: FloatingActionButton(
+    onPressed: () =&gt; _addNewItem(context),
+    tooltip: &#39;Add&#39;,
+    child: Icon(Icons.add),
+  )
+  );
+}
+
+_addNewItem(BuildContext context) { }
+</code></pre>
+</li>
+<li>We can start by adding an item to list. Remember! we should use <code>setState</code> for it:<pre><code>_addNewItem(BuildContext context) {
+setState(() {
+                items.add(&#39;New item&#39;);
+              });
+}
+</code></pre>
+</li>
+<li>Works! but... We need some useful UI for our users. Now we suggest adding alert with a text field. Let&#39;s start from the alert. We can use method <a href="https://api.flutter.dev/flutter/material/showDialog.html" target="_blank">showDialog</a> and <a href="https://api.flutter.dev/flutter/material/AlertDialog-class.html" target="_blank">alert widget</a>. We use <code>Navigator</code> but will discuss it later in this course.<pre><code>_addNewItem(BuildContext context) {
+showDialog(
+  context: context,
+  builder: (context) {
+    return AlertDialog(
+      title: Text(&#39;Write new action todo&#39;),
+      actions: &lt;Widget&gt;[
+        FlatButton(
+          child: Text(&#39;CANCEL&#39;),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          ),
+          FlatButton(
+            child: Text(&#39;Add&#39;),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+      ],
+    );
+  }
+);
+}
+</code></pre>
+</li>
+<li>Last step. We add <a href="https://api.flutter.dev/flutter/material/TextField-class.html" target="_blank">TextField</a> and <a href="https://api.flutter.dev/flutter/widgets/TextEditingController-class.html" target="_blank">TextEditingController</a> for working with user input and control it. We use <code>setState</code> in <code>Add</code> action to update our widget state. And we clear text in our <code>_textFieldController</code> for showing clear field each time when user press <code>Add</code>:<pre><code>TextEditingController _textFieldController = TextEditingController();
+
+_addNewItem(BuildContext context) {
+showDialog(
+  context: context,
+  builder: (context) {
+    return AlertDialog(
+      title: Text(&#39;Write new action todo&#39;),
+      content: TextField(
+        controller: _textFieldController,
+        decoration: InputDecoration(hintText: &#39;Todo action&#39;),
+      ),
+      actions: &lt;Widget&gt;[
+        FlatButton(
+          child: Text(&#39;CANCEL&#39;),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          ),
+          FlatButton(
+            child: Text(&#39;Add&#39;),
+            onPressed: () {
+              setState(() {
+                if (_textFieldController.text.length &gt; 0) {
+                  items.add(_textFieldController.text);
+                  _textFieldController.clear();
+                }
+              });
+              Navigator.of(context).pop();
+            },
+          )
+      ],
+    );
+  }
+);
+}
+</code></pre>
+</li>
+</ol>
+<p>Looks like the app is done. But...</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Homework" duration="0">
+        <p>Each app always can be improved. It can be improved in hundreds of ways. Let&#39;s start on our todo list.</p>
+<p>Please, add the ability to remove an item from the list. Do it as you want.</p>
+<p>We suggest choosing one of the variants:</p>
+<ol type="1">
+<li>Add ‘minus&#39; button to each item in the list.</li>
+<li>Add swipe action for removing an item.</li>
+<li>The simplest variant, add one more button to the screen and remove items in some order.</li>
+</ol>
+<p>Additionally, you can try to update UI for items. It can be borders, different fonts, etc. Just start exploring widget catalog. You can customize our <a href="https://api.flutter.dev/flutter/material/ListTile-class.html" target="_blank">ListTile</a> for creating more friendly item UI.</p>
+<p>Good luck!</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Lecture 1 - Intro</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="1"
+                  title="Lecture 1 - Intro"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="What is this course about?" duration="0">
+        <p>Three modules:</p>
+<ol type="1">
+<li>Flutter Basics. Dart basics, Widgets, Assets &amp; user interaction, networking, and some device capabilities.</li>
+<li>Flutter Pro. How and why Flutter works? Architecture &amp; FRP, Firebase, Test-first approach, custom animations, web &amp; desktop, platform-specific code, and app distribution.</li>
+<li>Mobile Dev. Software development lifecycle, work in teams (agile, kanban), CI/CD, profiling.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dart Concepts" duration="0">
+        <p>Everything you can place in a variable is an object, and every object is an instance of a class. Even numbers, functions, and null are objects. All objects inherit from the Object class.</p>
+<p>Although Dart is strongly typed, type annotations are optional because Dart can infer types. When you want to explicitly say that no type is expected, use the special type <code>dynamic</code>.</p>
+<p>Dart supports generic types, like <code>List&lt;int&gt;</code> (a list of integers) or <code>List&lt;dynamic&gt;</code> (a list of objects of any type).</p>
+<p>The entry point of a Dart class is the <code>main()</code> function. This method acts as a starting point for Flutter apps as well.</p>
+<p>Dart supports top-level functions (such as <code>main()</code>), as well as functions tied to a class or object (static and instance methods, respectively). You can also create functions within functions (nested or local functions).</p>
+<p>Similarly, Dart supports top-level variables, as well as variables tied to a class or object (static and instance variables). Instance variables are sometimes known as fields or properties.</p>
+<p>Dart doesn&#39;t have the keywords <code>public</code>, <code>protected</code>, and <code>private</code>. If an identifier starts with an underscore (like <code>_firstname</code>), it&#39;s private to its library.</p>
+<p>Identifiers can start with a letter or underscore (<code>_</code>), followed by any combination of those characters plus digits.</p>
+<p>Dart has both expressions (which have runtime values) and statements (which don&#39;t). For example, the conditional expression condition <code>? expr1 : expr2</code> has a value of <code>expr1</code> or <code>expr2</code>. Compare that to an if-else statement, which has no value. A statement often contains one or more expressions, but an expression can&#39;t directly contain a statement.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dart showcase" duration="0">
+        <p>The most useful thing for debuging on any platform - a print to console sample:</p>
+<pre><code>print(&#39;Welcome to Dart&#39;);
+</code></pre>
+<p>Dart supports 2 types of numbers: integers and doubles. There is a special type <code>num</code> which might contain integer or double.</p>
+<pre><code>int a = 8;
+double b = 3.5;
+num c = 34; // integer or double
+</code></pre>
+<p>Dart support strings:</p>
+<pre><code>String str = &#39;Dart&#39;;
+</code></pre>
+<p>And booleans:</p>
+<pre><code>bool flag = false;
+</code></pre>
+<p>You may skip the type definition as Dart is smart enough to get it automatically. There are 3 keywords to describe the mutability of the variable.<br>Use <code>final</code> when you don&#39;t plan to change the value later on. Prefer <code>const</code> when the value is known during complilation. Otherwise use <code>var</code>.</p>
+<p>You may check the type by using <code>runtimeType</code> property.</p>
+<pre><code>final x = 2;
+const y = 2.3;
+var z = &#39;Flutter&#39;;
+
+print(x.runtimeType); // int
+print(y.runtimeType); // double
+print(z.runtimeType); // String
+</code></pre>
+<p>List is the one of the most used primities in Dart. The compiler is smart enough to get the type of the list elements automatically.</p>
+<pre><code>final a = [1,2,3];
+final b = [&#39;hello&#39;, &#39;world&#39;];
+final c = [1, &#39;abc&#39;, 2.1];
+</code></pre>
+<p>Though it is a best practice to specify the type by yourself, like this:</p>
+<pre><code>final generic = &lt;int&gt;[1,2,3];
+</code></pre>
+<p>Map is commonly used for small data structures, or when the data model is unkown.</p>
+<pre><code>final m = {&#39;firstname&#39;: &#39;John&#39;, &#39;lastname&#39;: &#39;Smith&#39;, &#39;age&#39;: 20.3};
+print(m);
+print(m.keys);
+print(m.values);
+print(m[&#39;firstname&#39;]);
+</code></pre>
+<p>When the model is known, prefer classes.</p>
+<pre><code>class Person {
+    String firstname;
+    String lastname;
+    double age;
+}
+</code></pre>
+<p>Always prefer <code>const</code> constructors and <code>final</code> properties in classes:</p>
+<pre><code>class Person {
+    const Person(this.firstname, this.lastname, this.age);
+
+    final String firstname;
+    final String lastname;
+    final double age;
+}
+</code></pre>
+<p>Functions definition looks like this:</p>
+<pre><code>int multiply(int a, int b) {
+    return a * b;
+}
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dart course rules" duration="0">
+        <ol type="1">
+<li>Prefer <code>const</code> and <code>final</code>.</li>
+<li>Try to write pure functions only. More on this later.</li>
+<li>Read and follow the <a href="https://dart.dev/guides/language/effective-dart" target="_blank">language guidelines</a></li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="How to learn Flutter" duration="0">
+        <p>You are already at the right place :-)</p>
+<p>To speed up you may:</p>
+<ol type="1">
+<li>Go through <a href="https://classroom.udacity.com/courses/ud905/" target="_blank">course</a> from Google.</li>
+<li>Complete codelabs (<a href="https://codelabs.developers.google.com/codelabs/mdc-101-flutter/" target="_blank">basics</a>, <a href="https://codelabs.developers.google.com/codelabs/mdc-102-flutter/" target="_blank">layout</a>, <a href="https://codelabs.developers.google.com/codelabs/mdc-103-flutter/" target="_blank">theming</a>, <a href="https://codelabs.developers.google.com/codelabs/mdc-104-flutter/" target="_blank">advanced</a>)</li>
+<li>Watch <a href="https://www.youtube.com/playlist?list=PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG" target="_blank">Widgets of the Week</a></li>
+<li>Subscribe to <a href="https://www.youtube.com/playlist?list=PLOU2XLYxmsIK0r_D-zWcmJ1plIcDNnRkK" target="_blank">The Boring Flutter Development Show</a></li>
+<li>Get familiar with <a href="https://flutter.dev/docs/development/ui/widgets" target="_blank">Widget Catalog</a></li>
+</ol>
+<p>For pro&#39;s:</p>
+<ol type="1">
+<li><a href="https://www.dartlang.org/guides/language/effective-dart" target="_blank">Effective Dart Guide</a></li>
+<li><a href="https://flutter.dev/docs/testing" target="_blank">Testing Flutter apps</a></li>
+<li>Flutter rendering <a href="https://www.youtube.com/watch?v=UUfXWzp0-DU" target="_blank">video</a></li>
+<li>Read the source code</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="How to install Flutter" duration="0">
+        <p>Follow the official guide for your OS:</p>
+<ul>
+<li><a href="https://flutter.dev/docs/get-started/install/windows" target="_blank">Windows</a></li>
+<li><a href="https://flutter.dev/docs/get-started/install/macos" target="_blank">macOS</a></li>
+<li><a href="https://flutter.dev/docs/get-started/install/linux" target="_blank">Linux</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Useful IDE plugins" duration="0">
+        <h2 is-upgraded>Essential Plugins</h2>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter" target="_blank">Flutter</a> – Flutter support and debugger for Visual Studio Code.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code" target="_blank">Dart</a> - Dart language support and debugger for Visual Studio Code.</li>
+</ul>
+<h2 is-upgraded>Must-have Plugins</h2>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens" target="_blank">GitLens</a> - Supercharge the Git capabilities built into Visual Studio Code</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=2gua.rainbow-brackets" target="_blank">Rainbow Brackets</a> - A rainbow brackets extension for VS Code.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters" target="_blank">Coverage Gutters</a> - Display test coverage generated by lcov or xml - works with many languages</li>
+</ul>
+<h2 is-upgraded>Optional Plugins</h2>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=Orta.vscode-ios-common-files" target="_blank">iOS Common Files</a> - Provides Syntax Highlighting to common iOS files e.g CocoaPods / Fastlane.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced" target="_blank">Markdown Preview Enhanced</a> - Markdown Preview Enhanced ported to vscode</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme" target="_blank">Material Icon Theme</a> - Material Design Icons for Visual Studio Code</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=zhouronghui.propertylist" target="_blank">PropertyList</a> - snippets for .plist file</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=Kasik96.swift" target="_blank">Swift Language</a> - Swift language support for VS Code</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=mathiasfrohlich.Kotlin" target="_blank">Kotlin Language</a> - Kotlin language support for VS Code</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=vscodevim.vim" target="_blank">Vim</a> - Vim emulation for Visual Studio Code</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Code like a pro" duration="0">
+        <p>In order to turn on linter put <a href="https://github.com/flutter/flutter/blob/master/analysis_options.yaml" target="_blank">this file</a> in the root folder of your project.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Homework" duration="0">
+        <ol type="1">
+<li>Install <code>Flutter</code>.</li>
+<li>Become familiar with <code>Dart</code> syntax.</li>
+<li>Make sure you have access to the <code>Slack</code> team.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>
