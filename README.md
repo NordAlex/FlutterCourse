@@ -1,4 +1,4 @@
-##Ciklum Mobile Development Course: Flutter
+# Ciklum Mobile Development Course: Flutter
 
 The course contains three main modules: 
  - Flutter Basics. Dart basics, Widgets, Assets & user interaction, networking, and some device capabilities.
