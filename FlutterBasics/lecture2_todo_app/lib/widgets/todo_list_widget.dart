@@ -44,7 +44,7 @@ class TodoListState extends State<TodoList> {
         padding: const EdgeInsets.all(16.0),
         itemCount: items.length,
         itemBuilder: (BuildContext ctxt, int index) {
-          _buildRow(index);
+          return _buildRow(index);
         });
   }
 
