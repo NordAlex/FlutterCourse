@@ -18,7 +18,7 @@ class TodoListState extends State<TodoList> {
   final _cancelText = 'Cancel';
   final _okText = 'Ok';
 
-  List<String> items = [
+  final items = [
     'Complete flutter homework',
     'Fix all bugs',
     'Enslave the world',
@@ -69,9 +69,7 @@ class TodoListState extends State<TodoList> {
   }
 
   void _removeItem(int index) {
-    setState(() {
-      items.removeAt(index);
-    });
+    setState(() => items.removeAt(index));
     _showSnackBar();
   }
 
