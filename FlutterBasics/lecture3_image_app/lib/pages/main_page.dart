@@ -44,11 +44,13 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buidGridView() {
-    return GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(8),
-        children:
-            List.generate(_imageUrls.length, (index) => _buildGridCell(index)));
+    return GridView.builder(
+    
+    itemCount: _imageUrls.length,
+    gridDelegate:
+       SliverGridDelegateWithFixedCrossAxisCount(
+                                   crossAxisCount: 2),
+    itemBuilder: (BuildContext context, int index) => _buildGridCell(index));
   }
 
   Widget _buildGridCell(int index) {
