@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 
 class DetailsPage extends StatelessWidget
 {
-const DetailsPage(this.url);
 
-final String url;
+  DetailsPage({
+    Key key, @required this.imageUrl
+    }) : assert(imageUrl != null),
+    super(key: key);
+
+final _title = 'Details page';
+final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( appBar: AppBar(title: const Text('Oh shit here we go again'),),
-          body: Image.network(url, fit: BoxFit.fill,)
+    return Scaffold( appBar: AppBar(title: Text(_title),),
+          body: Image.network(imageUrl, fit: BoxFit.fill,)
     );
   }
   
