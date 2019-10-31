@@ -10,7 +10,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   final _title = 'Time to check my memes collection';
 
   final _imageUrls = [
@@ -34,23 +33,25 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_title),
-        ),
-        body: _buidGridView(),
-        floatingActionButton: FloatingActionButton(child: const Icon(Icons.publish), onPressed: () {
-          _addNewItem();
-        }),);     
+      appBar: AppBar(
+        title: Text(_title),
+      ),
+      body: _buidGridView(),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.publish),
+          onPressed: () {
+            _addNewItem();
+          }),
+    );
   }
 
   Widget _buidGridView() {
     return GridView.builder(
-    
-    itemCount: _imageUrls.length,
-    gridDelegate:
-       SliverGridDelegateWithFixedCrossAxisCount(
-                                   crossAxisCount: 2),
-    itemBuilder: (BuildContext context, int index) => _buildGridCell(index));
+        itemCount: _imageUrls.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) =>
+            _buildGridCell(index));
   }
 
   Widget _buildGridCell(int index) {
@@ -66,18 +67,18 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _navigateDetailsPage(String url) {
-    Navigator.push<DetailsPage>(
-        context, MaterialPageRoute(builder: (context) => DetailsPage(imageUrl: url)));
+    Navigator.push<DetailsPage>(context,
+        MaterialPageRoute(builder: (context) => DetailsPage(imageUrl: url)));
   }
 
-  void _addNewItem(){
+  void _addNewItem() {
     final itemNumber = _generateRandom(_imageUrls.length);
     final newImage = _imageUrls[itemNumber];
     setState(() => _imageUrls.add(newImage));
   }
 
- int _generateRandom(int maxNumber) {
-  final generator = Random();
-  return generator.nextInt(maxNumber);
-}
+  int _generateRandom(int maxNumber) {
+    final generator = Random();
+    return generator.nextInt(maxNumber);
+  }
 }

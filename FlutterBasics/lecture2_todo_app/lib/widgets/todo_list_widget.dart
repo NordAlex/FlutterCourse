@@ -64,7 +64,7 @@ class TodoListState extends State<TodoList> {
           onPressed: () => _removeItem(index),
         ),
       ),
-      Divider()
+      const Divider()
     ]);
   }
 
