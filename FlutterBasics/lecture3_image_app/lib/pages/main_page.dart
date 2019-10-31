@@ -11,7 +11,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final _title = 'Time to check my memes collection';
-
+  
   final _imageUrls = [
     'https://pbs.twimg.com/media/EIC15VJWwAAl7FN.jpg',
     'https://pbs.twimg.com/media/EHemudoXYAEt395.jpg',
@@ -29,6 +29,8 @@ class _MainPageState extends State<MainPage> {
     'https://66.media.tumblr.com/tumblr_mdt31qPEjp1qkr5g0.jpg',
     'https://pics.me.me/decided-toteachmyself-cross-platformlapp-development-aannndddidont-have-amac-imgflip-com-xcode-21756363.png',
   ];
+
+  Random numberGenerator;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   int _generateRandom(int maxNumber) {
-    final generator = Random();
-    return generator.nextInt(maxNumber);
+    numberGenerator ??= Random();
+    return numberGenerator.nextInt(maxNumber);
   }
 }
