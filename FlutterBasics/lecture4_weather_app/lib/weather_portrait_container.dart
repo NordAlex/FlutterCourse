@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lecture4_weather_app/weather.dart';
 
-class WeatherContainer extends StatelessWidget {
+class WeatherPortraitContainer extends StatelessWidget {
 
-  const WeatherContainer({Key key, @required this.weather})
+  const WeatherPortraitContainer({Key key, @required this.weather})
       : assert(weather != null),
         super(key: key);
 
