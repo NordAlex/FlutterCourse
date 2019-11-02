@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lecture4_weather_app/weather.dart';
 import 'package:lecture4_weather_app/weather_landscape_container.dart';
@@ -9,7 +8,7 @@ class WeatherOverviewPage extends StatelessWidget {
   final _weatherProvider = WeatherProvider();
 
   final _title = 'Weather Overview';
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

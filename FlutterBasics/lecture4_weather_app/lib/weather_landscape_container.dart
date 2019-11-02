@@ -10,17 +10,46 @@ class WeatherLandscapeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        children: <Widget>[
-          Text(
-            '${weather.locationName}: ${weather.temperature} °C',
-            style: Theme.of(context).textTheme.display1,
-            textAlign: TextAlign.center,
-          ),
-          Image.network(weather.iconUrl),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        _buildTitle(context),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildMainInfoColumn(context),
+            _buildWeatherIndicator()
+          ],
+        )
+      ],
     );
   }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      weather.locationName,
+      style: Theme.of(context).textTheme.display1,
+    );
+  }
+
+  Widget _buildMainInfoColumn(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text(
+          'Teperature ${weather.temperature} °C',
+          style: Theme.of(context).textTheme.title,
+        ),
+        Text(
+          'Pressure: ${weather.pressure} Pa',
+          style: Theme.of(context).textTheme.title,
+        ),
+        Text(
+          'Humidity: ${weather.humidity} %',
+          style: Theme.of(context).textTheme.title,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWeatherIndicator() => Image.network(weather.iconUrl);
 }
