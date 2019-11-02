@@ -45,7 +45,8 @@ class WeatherOverviewPage extends StatelessWidget {
   Widget _showProgresIndicator() => const CircularProgressIndicator();
 
   Widget _showError(BuildContext context) {
-    return Text('Failed to fetch data. Check your connection', textAlign: TextAlign.center,
+    return Text('Failed to fetch data. Check your connection',
+        textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.display1);
   }
 }
