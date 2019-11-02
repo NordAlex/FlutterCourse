@@ -15,7 +15,7 @@ class WeatherOverviewPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(_title),
         ),
-        body: SafeArea(child: _fetchWeatherInfo()));
+        body: SafeArea(child: Center(child: _fetchWeatherInfo())));
   }
 
   Widget _fetchWeatherInfo() {
@@ -25,7 +25,7 @@ class WeatherOverviewPage extends StatelessWidget {
         if (snapshot.hasData) {
           return _showResult(snapshot.data);
         } else if (snapshot.hasError) {
-          return _showError();
+          return _showError(context);
         }
         return _showProgresIndicator();
       },
@@ -44,5 +44,8 @@ class WeatherOverviewPage extends StatelessWidget {
 
   Widget _showProgresIndicator() => const CircularProgressIndicator();
 
-  Widget _showError() => const Icon(Icons.network_locked);
+  Widget _showError(BuildContext context) {
+    return Text('Failed to fetch data. Check your connection', textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.display1);
+  }
 }
