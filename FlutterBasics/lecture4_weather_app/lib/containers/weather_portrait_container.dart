@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lecture4_weather_app/weather.dart';
+import 'package:lecture4_weather_app/models/weather.dart';
 
 class WeatherPortraitContainer extends StatelessWidget {
   const WeatherPortraitContainer({Key key, @required this.weather})

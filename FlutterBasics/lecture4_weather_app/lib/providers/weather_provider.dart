@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lecture4_weather_app/weather.dart';
+import 'package:lecture4_weather_app/models/weather.dart';
 
 class WeatherProvider {
   Future<Weather> getCurrentWeather() async {

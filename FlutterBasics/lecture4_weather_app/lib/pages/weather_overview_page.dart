@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lecture4_weather_app/weather.dart';
-import 'package:lecture4_weather_app/weather_landscape_container.dart';
-import 'package:lecture4_weather_app/weather_portrait_container.dart';
-import 'package:lecture4_weather_app/weather_provider.dart';
+import 'package:lecture4_weather_app/containers/weather_landscape_container.dart';
+import 'package:lecture4_weather_app/containers/weather_portrait_container.dart';
+import 'package:lecture4_weather_app/models/weather.dart';
+import 'package:lecture4_weather_app/providers/weather_provider.dart';
 
 class WeatherOverviewPage extends StatelessWidget {
   final _weatherProvider = WeatherProvider();
