@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailsPage extends StatefulWidget {
 
-  const DetailsPage({Key key, this.user}) : super(key: key);
+  const DetailsPage({Key key, @required this.user}) : super(key: key);
 
   final User user;
 
