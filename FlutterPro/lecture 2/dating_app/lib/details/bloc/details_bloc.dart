@@ -15,7 +15,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
       final permission = await _getPermission();
       if(permission != PermissionStatus.granted)
       {
-        yield ProcessingFailedState();
+        yield const ProcessingFailedState('Please turn on the geolocation');
         return;
       }
       try
@@ -27,7 +27,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
       }
       catch(exeption)
       {
-        yield ProcessingFailedState();
+        yield const ProcessingFailedState('Something get wrong during getting location');
       }
     }
   }

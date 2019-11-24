@@ -57,7 +57,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       }
                       else if (state is ProcessingFailedState) {
                         return Text(
-                          'Please turn on the geolocation',
+                          '${state.errorMessage}',
                           style: Theme.of(context).textTheme.headline,
                         );
                       } 

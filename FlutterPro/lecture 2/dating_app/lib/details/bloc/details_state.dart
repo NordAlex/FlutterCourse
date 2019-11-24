@@ -10,6 +10,10 @@ class UserProcessingState extends DetailsState {
 }
 
 class ProcessingFailedState extends DetailsState {
+
+  const ProcessingFailedState(this.errorMessage);
+
+  final String errorMessage;
 }
 
 class UserProcessedState extends DetailsState {
