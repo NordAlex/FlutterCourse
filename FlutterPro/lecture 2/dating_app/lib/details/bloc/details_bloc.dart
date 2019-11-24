@@ -12,6 +12,12 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   @override
   Stream<DetailsState> mapEventToState(DetailsEvent event) async* {
     if (event is ProcessUserDataEvent) {
+      final permission = await _getPermission();
+      if(permission != PermissionStatus.granted)
+      {
+        yield ProcessingFailedState();
+        return;
+      }
       final coordinates = await _getCoordinates();
       final distance = Distance().as(LengthUnit.Kilometer, coordinates,
           LatLng(event.user.latitude, event.user.longitude));
@@ -19,10 +25,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     }
   }
 
-  Future<LatLng> _getCoordinates() async {
+  Future<PermissionStatus> _getPermission() async{
     final permission = LocationPermissions();
-    await permission.requestPermissions();
+    final status = await permission.requestPermissions();
+    return status;
+  }
 
+  Future<LatLng> _getCoordinates() async {
     final geolocator = Geolocator();
     final position = await geolocator.getLastKnownPosition(
         desiredAccuracy: LocationAccuracy.high);

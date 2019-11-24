@@ -9,9 +9,14 @@ abstract class DetailsState{
 class InitialDetailsState extends DetailsState {
 }
 
+class ProcessingFailedState extends DetailsState {
+}
+
 class UserProcessedState extends DetailsState {
 
   const UserProcessedState({@required this.user, @required this.distance});
     final User user;
     final num distance; 
 }
+
+

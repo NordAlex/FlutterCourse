@@ -4,9 +4,6 @@ import 'package:dating_app/details/bloc/details_state.dart';
 import 'package:dating_app/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:latlong/latlong.dart';
-import 'package:location_permissions/location_permissions.dart';
 
 class DetailsPage extends StatefulWidget {
 
@@ -58,12 +55,12 @@ class _DetailsPageState extends State<DetailsPage> {
                           style: Theme.of(context).textTheme.headline,
                         );
                       }
-                      // else if (snapshot.hasError) {
-                      //   return Text(
-                      //     'Please turn on the geolocation',
-                      //     style: Theme.of(context).textTheme.headline,
-                      //   );
-                      // } 
+                      else if (state is ProcessingFailedState) {
+                        return Text(
+                          'Please turn on the geolocation',
+                          style: Theme.of(context).textTheme.headline,
+                        );
+                      } 
                       else {
                         return const CircularProgressIndicator();
                       }
