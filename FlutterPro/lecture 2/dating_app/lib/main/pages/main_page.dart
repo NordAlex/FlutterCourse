@@ -10,6 +10,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final _title = 'Almost Tinder';
+
   @override
   void didChangeDependencies() {
     BlocProvider.of<MainBloc>(context)..add(LoadNewUser());
@@ -20,7 +22,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Almost Tinder'),
+        title: Text(_title),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -33,17 +35,8 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buidbuttons() {
     return UserButtons(
-      onReload: () {
-        BlocProvider.of<MainBloc>(context)..add(LoadNewUser());
-      },
-      onNext: () {
-        final state = BlocProvider.of<MainBloc>(context).state;
-        if (state is UserLoadedState) {
-          Navigator.of(context).push<void>(MaterialPageRoute(
-            builder: (context) => DetailsPage(user: state.user),
-          ));
-        }
-      },
+      onReload: () => _reloadUser(),
+      onNext: () => _showDetails(),
     );
   }
 
@@ -52,6 +45,7 @@ class _MainPageState extends State<MainPage> {
       builder: (context, state) {
         if (state is UserLoadedState) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Hero(
                 tag: 'avatar',
@@ -72,8 +66,24 @@ class _MainPageState extends State<MainPage> {
             ],
           );
         }
-        return const CircularProgressIndicator();
+        return Container(
+          height: 390,
+          child: Center(
+            child: const CircularProgressIndicator(),
+          ),
+        );
       },
     );
+  }
+
+  void _reloadUser() => BlocProvider.of<MainBloc>(context)..add(LoadNewUser());
+
+  void _showDetails() {
+    final state = BlocProvider.of<MainBloc>(context).state;
+    if (state is UserLoadedState) {
+      Navigator.of(context).push<void>(MaterialPageRoute(
+        builder: (context) => DetailsPage(user: state.user),
+      ));
+    }
   }
 }

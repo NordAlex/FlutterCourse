@@ -7,7 +7,7 @@ import './bloc.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   @override
-  DetailsState get initialState => InitialDetailsState();
+  DetailsState get initialState => UserProcessingState();
 
   @override
   Stream<DetailsState> mapEventToState(DetailsEvent event) async* {

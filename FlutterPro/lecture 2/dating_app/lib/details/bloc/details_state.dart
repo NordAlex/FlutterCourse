@@ -6,7 +6,7 @@ abstract class DetailsState{
   const DetailsState();
 }
 
-class InitialDetailsState extends DetailsState {
+class UserProcessingState extends DetailsState {
 }
 
 class ProcessingFailedState extends DetailsState {
