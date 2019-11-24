@@ -1,6 +1,6 @@
 import 'package:dating_app/details/pages/details_page.dart';
 import 'package:dating_app/main/bloc/bloc.dart';
-import 'package:dating_app/pages/user_buttons.dart';
+import 'package:dating_app/widgets/user_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,19 +10,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
- 
- @override
+  @override
   void didChangeDependencies() {
-
     BlocProvider.of<MainBloc>(context)..add(LoadNewUser());
     super.didChangeDependencies();
   }
-
-  // @override
-  // void dispose() {
-  //   _bloc.close();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
