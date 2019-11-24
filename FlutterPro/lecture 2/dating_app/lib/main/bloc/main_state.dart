@@ -15,4 +15,7 @@ class UserLoadedState extends MainState{
   final User user;
 }
 
+class UserLoadingFailed extends MainState{
+}
+
 

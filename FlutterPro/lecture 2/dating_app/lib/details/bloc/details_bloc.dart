@@ -18,10 +18,17 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         yield ProcessingFailedState();
         return;
       }
-      final coordinates = await _getCoordinates();
-      final distance = Distance().as(LengthUnit.Kilometer, coordinates,
-          LatLng(event.user.latitude, event.user.longitude));
-      yield UserProcessedState(user: event.user, distance: distance);
+      try
+      {
+        final coordinates = await _getCoordinates();
+        final distance = Distance().as(LengthUnit.Kilometer, coordinates,
+            LatLng(event.user.latitude, event.user.longitude));
+        yield UserProcessedState(user: event.user, distance: distance);
+      }
+      catch(exeption)
+      {
+        yield ProcessingFailedState();
+      }
     }
   }
 

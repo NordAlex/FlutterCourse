@@ -12,13 +12,17 @@ class MainBloc extends Bloc<MainPageEvent, MainState> {
 
   @override
   Stream<MainState> mapEventToState(
-    MainPageEvent event, 
+    MainPageEvent event,
   ) async* {
-    if(event is LoadNewUser){
+    if (event is LoadNewUser) {
       yield UserLoadingState();
 
-      final user =  await _generateUser();
-      yield UserLoadedState(user);
+      try {
+        final user = await _generateUser();
+        yield UserLoadedState(user);
+      } catch (e) {
+        yield UserLoadingFailed();
+      }
     }
   }
 
@@ -28,7 +32,7 @@ class MainBloc extends Bloc<MainPageEvent, MainState> {
     return compute(_parseUser, response.body);
   }
 
-    static User _parseUser(String response) {
+  static User _parseUser(String response) {
     final Map<String, dynamic> parsed = json.decode(response);
     return User.fromRandomUserResponse(parsed);
   }

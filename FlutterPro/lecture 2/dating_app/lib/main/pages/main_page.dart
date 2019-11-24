@@ -14,6 +14,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void didChangeDependencies() {
+    const PageStorageKey<String>('test');
     BlocProvider.of<MainBloc>(context)..add(LoadNewUser());
     super.didChangeDependencies();
   }
@@ -44,7 +45,9 @@ class _MainPageState extends State<MainPage> {
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         if (state is UserLoadedState) {
-          return Column(
+          return Container(
+            height: 390,
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Hero(
@@ -53,7 +56,6 @@ class _MainPageState extends State<MainPage> {
                   state.user.image,
                   fit: BoxFit.fill,
                   height: 300,
-                  width: 300,
                 ),
               ),
               Padding(
@@ -64,14 +66,21 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ],
+          ));
+        }
+        else if(state is UserLoadingState)
+        {
+          return Container(
+            height: 390,
+            child: Center(
+              child: const CircularProgressIndicator(),
+            ),
           );
         }
+        
         return Container(
-          height: 390,
-          child: Center(
-            child: const CircularProgressIndicator(),
-          ),
-        );
+            height: 390,
+            child: const Text('Network error'));
       },
     );
   }
