@@ -12,13 +12,33 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Future<User> _user;
+  AnimationController _offcetController;
+
+  AnimationController _fadingController;
+  Animation<double> _offcetAnimation;
+  Animation<double> _fadingAnimation;
 
   @override
   void initState() {
     super.initState();
     _user = _generateUser();
+    _offcetController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    _offcetAnimation = Tween(begin: -300.0, end: 0.0).animate(_offcetController)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _fadingController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    _fadingAnimation = Tween(begin: 1.0, end: 0.0).animate(_fadingController)
+      ..addListener(((){
+        setState(() {});
+      }));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _offcetController.forward();
+    });
   }
 
   @override
@@ -34,38 +54,40 @@ class _MainPageState extends State<MainPage> {
               if (snapshot.hasData) {
                 return SingleChildScrollView(
                   child: Column(
-                    children: <Widget>[
-                      Hero(
-                        tag: 'avatar',
-                        child: Image.network(
-                          snapshot.data.image,
-                          fit: BoxFit.fill,
-                          height: 300,
-                          width: 300,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24.0),
-                        child: Text(
-                          snapshot.data.name,
-                          style: Theme.of(context).textTheme.display1,
-                        ),
-                      ),
+                    children: <Widget>[ 
+                      FadeTransition(
+                        opacity: _fadingAnimation,
+                        child:  Transform.translate(
+                            offset: Offset(_offcetAnimation.value, 0),
+                            child: Column(
+                              children: <Widget>[
+                                Image.network(
+                                  snapshot.data.image,
+                                  fit: BoxFit.fill,
+                                  height: 300,
+                                  width: 300,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 24.0),
+                                  child: Text(
+                                    snapshot.data.name,
+                                    style: Theme.of(context).textTheme.display1,
+                                  ),
+                                ),
+                              ],
+                            ))),
+                      
                       UserButtons(
-                        onReload: () {
-                          setState(() {
-                            _user = _generateUser();
-                          });
-                        },
-                        onNext: () {
-                          Navigator.of(context).push<void>(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailsPage(user: snapshot.data),
-                            ),
-                          );
-                        },
-                      ),
+                          onReload: () {
+                            setState(() {
+                              _fadingController.reset();
+                              _fadingController.forward();
+                              _user = _generateUser();
+                            });
+                          },
+                          onNext: () =>
+                              _navigateDetails(context, snapshot.data)),
                     ],
                   ),
                 );
@@ -83,11 +105,38 @@ class _MainPageState extends State<MainPage> {
   Future<User> _generateUser() async {
     final uri = Uri.https('randomuser.me', '/api/1.3');
     final response = await http.get(uri);
-    return compute(_parseUser, response.body);
+    return compute(_parseUser, response.body).whenComplete(() {
+       _offcetController.reset();
+       _fadingController.reset();
+       _offcetController.forward();
+    });
   }
 
   static User _parseUser(String response) {
     final Map<String, dynamic> parsed = json.decode(response);
     return User.fromRandomUserResponse(parsed);
+  }
+
+  void _navigateDetails(BuildContext context, User selectedUser) {
+    Navigator.of(context).push<void>(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => DetailsPage(
+          user: selectedUser,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+
+          final tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      ),
+    );
   }
 }

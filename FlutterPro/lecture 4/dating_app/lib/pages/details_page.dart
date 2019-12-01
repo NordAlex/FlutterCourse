@@ -4,29 +4,52 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location_permissions/location_permissions.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   const DetailsPage({Key key, this.user}) : super(key: key);
 
   final User user;
 
   @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage>
+    with TickerProviderStateMixin {
+  AnimationController _imageOpacityController;
+  AnimationController _textOpacityController;
+
+  Animation<double> _imageOpacityAnimation;
+  Animation<double> _textOpacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textOpacityController = AnimationController(
+        vsync: this, duration: const Duration(seconds: 2));
+    _textOpacityAnimation =
+        Tween(begin: 0.0, end: 1.0).animate(_textOpacityController)
+          ..addListener((() {
+            setState(() {});
+          }));
+
+      _textOpacityController.forward();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(user.name),
+        title: Text(widget.user.name),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Hero(
-              tag: 'avatar',
-              child: Image.network(
-                user.image,
-                fit: BoxFit.fill,
-                height: 400,
-                width: 400,
-              ),
+          children: <Widget>[Image.network(
+              widget.user.image,
+              fit: BoxFit.fill,
+              height: 400,
+              width: 400,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -34,12 +57,14 @@ class DetailsPage extends StatelessWidget {
                 future: _getCoordinates(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    final km = Distance().as(LengthUnit.Kilometer,
-                        snapshot.data, LatLng(user.latitude, user.longitude));
-                    return Text(
-                      '${user.name} is $km km away from you!',
+                    final km = Distance().as(
+                        LengthUnit.Kilometer,
+                        snapshot.data,
+                        LatLng(widget.user.latitude, widget.user.longitude));
+                    return FadeTransition(opacity: _textOpacityAnimation, child:Text(
+                      '${widget.user.name} is $km km away from you!',
                       style: Theme.of(context).textTheme.headline,
-                    );
+                    ));
                   } else if (snapshot.hasError) {
                     return Text(
                       'Please turn on the geolocation',
@@ -64,6 +89,6 @@ class DetailsPage extends StatelessWidget {
     final geolocator = Geolocator();
     final position = await geolocator.getLastKnownPosition(
         desiredAccuracy: LocationAccuracy.high);
-    return LatLng(position.latitude, position.longitude);
+    return LatLng(0, 0);
   }
 }
