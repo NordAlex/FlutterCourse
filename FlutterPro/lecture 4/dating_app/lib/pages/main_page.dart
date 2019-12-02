@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dating_app/models/user.dart';
 import 'package:dating_app/pages/details_page.dart';
 import 'package:dating_app/pages/user_buttons.dart';
+import 'package:dating_app/pages/user_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,10 +14,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
-  Future<User> _user;
-  AnimationController _offcetController;
 
+  Future<User> _user;
+
+  AnimationController _offcetController;
   AnimationController _fadingController;
+
   Animation<double> _offcetAnimation;
   Animation<double> _fadingAnimation;
 
@@ -24,6 +27,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _user = _generateUser();
+
     _offcetController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     _offcetAnimation = Tween(begin: -300.0, end: 0.0).animate(_offcetController)
       ..addListener(() {
@@ -36,9 +40,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         setState(() {});
       }));
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _offcetController.forward();
-    });
+    _offcetController.forward();
+
   }
 
   @override
@@ -59,24 +62,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                         opacity: _fadingAnimation,
                         child:  Transform.translate(
                             offset: Offset(_offcetAnimation.value, 0),
-                            child: Column(
-                              children: <Widget>[
-                                Image.network(
-                                  snapshot.data.image,
-                                  fit: BoxFit.fill,
-                                  height: 300,
-                                  width: 300,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 24.0),
-                                  child: Text(
-                                    snapshot.data.name,
-                                    style: Theme.of(context).textTheme.display1,
-                                  ),
-                                ),
-                              ],
-                            ))),
+                            child: UserCard(snapshot.data)
+                        )
+                      ),
                       
                       UserButtons(
                           onReload: () {
@@ -105,14 +93,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Future<User> _generateUser() async {
     final uri = Uri.https('randomuser.me', '/api/1.3');
     final response = await http.get(uri);
-    return compute(_parseUser, response.body).whenComplete(() {
+    return _parseUser(response.body).whenComplete(() {
        _offcetController.reset();
        _fadingController.reset();
        _offcetController.forward();
     });
   }
 
-  static User _parseUser(String response) {
+  Future<User> _parseUser(String response) async {
     final Map<String, dynamic> parsed = json.decode(response);
     return User.fromRandomUserResponse(parsed);
   }
