@@ -9,27 +9,25 @@ class UserCard extends StatefulWidget {
   _UserCardState createState() => _UserCardState();
 }
 
-class _UserCardState extends State<UserCard>{
-
+class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
-       return Column(
-        children: <Widget>[
-          Image.network(
-            widget.user.image,
-            fit: BoxFit.fill,
-            height: 300,
-            width: 300,
+    return Column(
+      children: <Widget>[
+        Image.network(
+          widget.user.image,
+          fit: BoxFit.fill,
+          height: 300,
+          width: 300,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          child: Text(
+            widget.user.name,
+            style: Theme.of(context).textTheme.display1,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0),
-            child: Text(
-              widget.user.name,
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ),
-        ],
-
+        ),
+      ],
     );
   }
 }

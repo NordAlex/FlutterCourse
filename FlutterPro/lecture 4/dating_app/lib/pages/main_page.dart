@@ -4,7 +4,6 @@ import 'package:dating_app/models/user.dart';
 import 'package:dating_app/pages/details_page.dart';
 import 'package:dating_app/pages/user_buttons.dart';
 import 'package:dating_app/pages/user_card.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +13,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
-
   Future<User> _user;
 
   AnimationController _offcetController;
@@ -28,20 +26,21 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     super.initState();
     _user = _generateUser();
 
-    _offcetController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    _offcetController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
     _offcetAnimation = Tween(begin: -300.0, end: 0.0).animate(_offcetController)
       ..addListener(() {
         setState(() {});
       });
 
-    _fadingController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    _fadingController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
     _fadingAnimation = Tween(begin: 1.0, end: 0.0).animate(_fadingController)
-      ..addListener(((){
+      ..addListener((() {
         setState(() {});
       }));
 
     _offcetController.forward();
-
   }
 
   @override
@@ -57,15 +56,12 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               if (snapshot.hasData) {
                 return SingleChildScrollView(
                   child: Column(
-                    children: <Widget>[ 
+                    children: <Widget>[
                       FadeTransition(
-                        opacity: _fadingAnimation,
-                        child:  Transform.translate(
-                            offset: Offset(_offcetAnimation.value, 0),
-                            child: UserCard(snapshot.data)
-                        )
-                      ),
-                      
+                          opacity: _fadingAnimation,
+                          child: Transform.translate(
+                              offset: Offset(_offcetAnimation.value, 0),
+                              child: UserCard(snapshot.data))),
                       UserButtons(
                           onReload: () {
                             setState(() {
@@ -94,9 +90,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     final uri = Uri.https('randomuser.me', '/api/1.3');
     final response = await http.get(uri);
     return _parseUser(response.body).whenComplete(() {
-       _offcetController.reset();
-       _fadingController.reset();
-       _offcetController.forward();
+      _offcetController.reset();
+      _fadingController.reset();
+      _offcetController.forward();
     });
   }
 

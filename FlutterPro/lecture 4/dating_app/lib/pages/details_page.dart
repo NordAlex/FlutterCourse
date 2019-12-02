@@ -15,25 +15,22 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage>
     with TickerProviderStateMixin {
-  AnimationController _imageOpacityController;
   AnimationController _textOpacityController;
-
-  Animation<double> _imageOpacityAnimation;
   Animation<double> _textOpacityAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    _textOpacityController = AnimationController(
-        vsync: this, duration: const Duration(seconds: 2));
+    _textOpacityController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     _textOpacityAnimation =
         Tween(begin: 0.0, end: 1.0).animate(_textOpacityController)
           ..addListener((() {
             setState(() {});
           }));
 
-      _textOpacityController.forward();
+    _textOpacityController.forward();
   }
 
   @override
@@ -45,7 +42,8 @@ class _DetailsPageState extends State<DetailsPage>
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Image.network(
+          children: <Widget>[
+            Image.network(
               widget.user.image,
               fit: BoxFit.fill,
               height: 400,
@@ -61,10 +59,12 @@ class _DetailsPageState extends State<DetailsPage>
                         LengthUnit.Kilometer,
                         snapshot.data,
                         LatLng(widget.user.latitude, widget.user.longitude));
-                    return FadeTransition(opacity: _textOpacityAnimation, child:Text(
-                      '${widget.user.name} is $km km away from you!',
-                      style: Theme.of(context).textTheme.headline,
-                    ));
+                    return FadeTransition(
+                        opacity: _textOpacityAnimation,
+                        child: Text(
+                          '${widget.user.name} is $km km away from you!',
+                          style: Theme.of(context).textTheme.headline,
+                        ));
                   } else if (snapshot.hasError) {
                     return Text(
                       'Please turn on the geolocation',
@@ -89,6 +89,6 @@ class _DetailsPageState extends State<DetailsPage>
     final geolocator = Geolocator();
     final position = await geolocator.getLastKnownPosition(
         desiredAccuracy: LocationAccuracy.high);
-    return LatLng(0, 0);
+    return LatLng(position?.latitude, position?.longitude);
   }
 }
