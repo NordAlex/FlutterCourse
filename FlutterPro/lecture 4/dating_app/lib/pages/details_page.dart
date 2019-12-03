@@ -15,6 +15,10 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage>
     with TickerProviderStateMixin {
+
+  final _fadingStart = 0.0;
+  final _fadingFinish = 1.0;
+
   AnimationController _textOpacityController;
   Animation<double> _textOpacityAnimation;
 
@@ -25,7 +29,7 @@ class _DetailsPageState extends State<DetailsPage>
     _textOpacityController =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
     _textOpacityAnimation =
-        Tween(begin: 0.0, end: 1.0).animate(_textOpacityController)
+        Tween(begin: _fadingStart, end: _fadingFinish).animate(_textOpacityController)
           ..addListener((() {
             setState(() {});
           }));

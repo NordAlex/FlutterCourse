@@ -15,6 +15,15 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Future<User> _user;
 
+  final _offcetStart = -300.0;
+  final _offcetFinish = 0.0;
+
+  final _fadingStart = 1.0;
+  final _fadingFinish = 0.0;
+
+  final _offcetDuration = 200;
+  final _fadingDuration = 300;
+
   AnimationController _offcetController;
   AnimationController _fadingController;
 
@@ -27,18 +36,20 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     _user = _generateUser();
 
     _offcetController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200));
-    _offcetAnimation = Tween(begin: -300.0, end: 0.0).animate(_offcetController)
-      ..addListener(() {
-        setState(() {});
-      });
+        vsync: this, duration: Duration(milliseconds: _offcetDuration));
+    _offcetAnimation = Tween(begin: _offcetStart, end: _offcetFinish)
+        .animate(_offcetController)
+          ..addListener(() {
+            setState(() {});
+          });
 
     _fadingController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-    _fadingAnimation = Tween(begin: 1.0, end: 0.0).animate(_fadingController)
-      ..addListener((() {
-        setState(() {});
-      }));
+        vsync: this, duration: Duration(milliseconds: _fadingDuration));
+    _fadingAnimation = Tween(begin: _fadingStart, end: _fadingFinish)
+        .animate(_fadingController)
+          ..addListener((() {
+            setState(() {});
+          }));
 
     _offcetController.forward();
   }
@@ -63,13 +74,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                               offset: Offset(_offcetAnimation.value, 0),
                               child: UserCard(snapshot.data))),
                       UserButtons(
-                          onReload: () {
-                            setState(() {
-                              _fadingController.reset();
-                              _fadingController.forward();
-                              _user = _generateUser();
-                            });
-                          },
+                          onReload: () => _reloadUser(),
                           onNext: () =>
                               _navigateDetails(context, snapshot.data)),
                     ],
@@ -99,6 +104,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Future<User> _parseUser(String response) async {
     final Map<String, dynamic> parsed = json.decode(response);
     return User.fromRandomUserResponse(parsed);
+  }
+
+  void _reloadUser() {
+    setState(() {
+      _fadingController.reset();
+      _fadingController.forward();
+      _user = _generateUser();
+    });
   }
 
   void _navigateDetails(BuildContext context, User selectedUser) {
