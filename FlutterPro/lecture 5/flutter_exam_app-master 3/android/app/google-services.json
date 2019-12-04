@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "354650504440",
-    "firebase_url": "https://ciklum-flutter-course.firebaseio.com",
-    "project_id": "ciklum-flutter-course",
-    "storage_bucket": "ciklum-flutter-course.appspot.com"
+    "project_number": "200502438869",
+    "firebase_url": "https://testdateapp-5b77b.firebaseio.com",
+    "project_id": "testdateapp-5b77b",
+    "storage_bucket": "testdateapp-5b77b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:354650504440:android:cbb5b7954ae4acea1a8f0d",
+        "mobilesdk_app_id": "1:200502438869:android:1aac49065eb72e6bb2ab5c",
         "android_client_info": {
           "package_name": "com.ciklum.mobile.dating_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "354650504440-l13oad848d6b1ok0hbdto6rir162ukck.apps.googleusercontent.com",
+          "client_id": "200502438869-ttmc55v1ppotamqctvt88c5vtgi6m24t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBGnOUz4yvGB_Gyj5CW56pKv7_q61cSQNc"
+          "current_key": "AIzaSyBUUsYkA8VILJZPL71zehUTn91CvHfELK4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "354650504440-l13oad848d6b1ok0hbdto6rir162ukck.apps.googleusercontent.com",
+              "client_id": "200502438869-ttmc55v1ppotamqctvt88c5vtgi6m24t.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "354650504440-vmtta3h2dd6niiqogpsj6prcbvnctjqj.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ciklum.mobile.datingApp"
-              }
             }
           ]
         }
@@ -44,4 +37,5 @@
     }
   ],
   "configuration_version": "1"
+  
 }
