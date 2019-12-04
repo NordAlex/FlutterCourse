@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>354650504440-vmtta3h2dd6niiqogpsj6prcbvnctjqj.apps.googleusercontent.com</string>
+	<string>200502438869-n3grmhleh3gqnrc8f6l130q5vf36spal.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.354650504440-vmtta3h2dd6niiqogpsj6prcbvnctjqj</string>
+	<string>com.googleusercontent.apps.200502438869-n3grmhleh3gqnrc8f6l130q5vf36spal</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAh0JXrev3gcZsjkblMxySajlPuzxqXI5M</string>
+	<string>AIzaSyBHVeeV29nHaBJIxLwfHLag5F0ll674hyI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>354650504440</string>
+	<string>200502438869</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.ciklum.mobile.datingApp</string>
 	<key>PROJECT_ID</key>
-	<string>ciklum-flutter-course</string>
+	<string>testdateapp-5b77b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ciklum-flutter-course.appspot.com</string>
+	<string>testdateapp-5b77b.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:354650504440:ios:767709021d384bfc1a8f0d</string>
+	<string>1:200502438869:ios:8ea14da783a786d9b2ab5c</string>
 	<key>DATABASE_URL</key>
-	<string>https://ciklum-flutter-course.firebaseio.com</string>
+	<string>https://testdateapp-5b77b.firebaseio.com</string>
 </dict>
 </plist>
