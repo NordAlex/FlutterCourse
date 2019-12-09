@@ -30,8 +30,8 @@ class FavoritesPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onTap: () => _showUserDetails(
-                            context, user, currentUser));
+                        onTap: () =>
+                            _showUserDetails(context, user, currentUser));
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
