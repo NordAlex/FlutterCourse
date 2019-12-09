@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Dating App';
     final currentTab = [
       MainPage(
         firebaseUser: widget._curentUser,
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text(appTitle),
       ),
       body: Center(
         child: currentTab.elementAt(_selectedIndex),

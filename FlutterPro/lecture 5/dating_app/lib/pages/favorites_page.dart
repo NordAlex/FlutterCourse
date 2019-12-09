@@ -18,12 +18,20 @@ class FavoritesPage extends StatelessWidget {
                 return GridView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final user = snapshot.data[index];
                     return InkWell(
-                        child: GridTile(
-                          child: Image.network(snapshot.data[index].image),
+                        child: Center(
+                          child: GridTile(
+                            child: Column(
+                              children: <Widget>[
+                                Image.network(user.image),
+                                Text(user.name)
+                              ],
+                            ),
+                          ),
                         ),
                         onTap: () => _showUserDetails(
-                            context, snapshot.data[index], currentUser));
+                            context, user, currentUser));
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
