@@ -35,7 +35,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.10+2"
+    version: "0.12.11"
   collection:
     dependency: transitive
     description:
@@ -56,7 +56,14 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.0+1"
+    version: "0.15.1"
+  firebase_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_auth_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   firebase_core:
     dependency: "direct main"
     description:
@@ -87,7 +94,7 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.4+2"
+    version: "5.1.5"
   google_api_availability:
     dependency: transitive
     description:
