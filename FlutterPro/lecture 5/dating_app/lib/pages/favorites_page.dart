@@ -39,13 +39,13 @@ class FavoritesPage extends StatelessWidget {
         .document(currentUser.uid)
         .collection('favorites')
         .getDocuments();
-    final users = List<User>();
+    final users = <User>{};
 
     for (var item in favoriteQuery.documents) {
       users.add(User.fromCloudStorage(item.data));
     }
 
-    return users;
+    return users.toList();
   }
 
   void _showUserDetails(
