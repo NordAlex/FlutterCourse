@@ -4,54 +4,52 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  
-  HomePage(this.user);
+  const HomePage(this._curentUser);
 
-  FirebaseUser user;
+  final FirebaseUser _curentUser;
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
-
-    int _selectedIndex = 0;
+  int _selectedIndex = 0;
   void _onItemTapped(int index) {
-  setState(() {
-    _selectedIndex = index;
-  });
-}
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var currentTab = [
-        MainPage(firebaseUser: widget.user,),
-        FavoritesPage(widget.user),
-        ];
+    final currentTab = [
+      MainPage(
+        firebaseUser: widget._curentUser,
+      ),
+      FavoritesPage(widget._curentUser),
+    ];
 
     return Scaffold(
-    appBar: AppBar(
-      title: const Text('BottomNavigationBar Sample'),
-    ),
-    body: Center(
-      child: currentTab.elementAt(_selectedIndex),
-    ),
-    bottomNavigationBar: BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          title: Text('Search'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          title: Text('Favorite'),
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Colors.amber[800],
-      onTap: _onItemTapped,
-    ),
-    
-  );
-
-
-}}
+      appBar: AppBar(
+        title: const Text('BottomNavigationBar Sample'),
+      ),
+      body: Center(
+        child: currentTab.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            title: Text('Search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            title: Text('Favorite'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}

@@ -28,58 +28,57 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-        child: FutureBuilder<User>(
-            future: _user,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Hero(
-                        tag: 'avatar',
-                        child: Image.network(
-                          snapshot.data.image,
-                          fit: BoxFit.fill,
-                          height: 300,
-                          width: 300,
-                        ),
+    return Center(
+      child: FutureBuilder<User>(
+          future: _user,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Hero(
+                      tag: 'avatar',
+                      child: Image.network(
+                        snapshot.data.image,
+                        fit: BoxFit.fill,
+                        height: 300,
+                        width: 300,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24.0),
-                        child: Text(
-                          snapshot.data.name,
-                          style: Theme.of(context).textTheme.display1,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Text(
+                        snapshot.data.name,
+                        style: Theme.of(context).textTheme.display1,
                       ),
-                      UserButtons(
-                        onReload: () {
-                          setState(() {
-                            _user = _generateUser();
-                          });
-                        },
-                        onNext: () {
-                          Navigator.of(context).push<void>(
-                            MaterialPageRoute(
-                              builder: (context) => DetailsPage(
-                                tinderUser: snapshot.data,
-                                myUser: widget.firebaseUser,
-                              ),
+                    ),
+                    UserButtons(
+                      onReload: () {
+                        setState(() {
+                          _user = _generateUser();
+                        });
+                      },
+                      onNext: () {
+                        Navigator.of(context).push<void>(
+                          MaterialPageRoute(
+                            builder: (context) => DetailsPage(
+                              tinderUser: snapshot.data,
+                              myUser: widget.firebaseUser,
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return const Text(
-                    'Something is wrong. Check your internet connection. :-(');
-              } else {
-                return const CircularProgressIndicator();
-              }
-            }),
-      
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return const Text(
+                  'Something is wrong. Check your internet connection. :-(');
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }),
     );
   }
 
