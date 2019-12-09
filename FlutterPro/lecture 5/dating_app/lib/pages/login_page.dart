@@ -1,3 +1,4 @@
+import 'package:dating_app/pages/home_page.dart';
 import 'package:dating_app/pages/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,12 +57,6 @@ class LoginPage extends StatelessWidget {
     final email = _emailController.text;
     final password = _passwordController.text;
     final _auth = FirebaseAuth.instance;
-    final curentUser = await _auth.currentUser();
-    if(curentUser != null)
-    {
-        _navigateToMain(context, curentUser);
-        return;
-    }
     if (email != null && password != null) {
       try {
         final authResult = await _auth.signInWithEmailAndPassword(
@@ -86,9 +81,7 @@ class LoginPage extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => MainPage(
-          firebaseUser: user,
-        ),
+        builder: (context) => HomePage(user),
       ),
     );
   }
