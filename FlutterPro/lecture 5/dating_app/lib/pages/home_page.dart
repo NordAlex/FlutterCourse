@@ -1,12 +1,10 @@
 import 'package:dating_app/pages/favorites_page.dart';
 import 'package:dating_app/pages/main_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage(this._curentUser);
+  const HomePage();
 
-  final FirebaseUser _curentUser;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -18,10 +16,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final currentTab = [
-      MainPage(
-        firebaseUser: widget._curentUser,
-      ),
-      FavoritesPage(widget._curentUser),
+      MainPage(),
+      FavoritesPage(),
     ];
 
     return Scaffold(

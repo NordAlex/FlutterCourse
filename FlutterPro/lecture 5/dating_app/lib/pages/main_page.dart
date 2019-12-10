@@ -3,15 +3,13 @@ import 'dart:convert';
 import 'package:dating_app/models/user.dart';
 import 'package:dating_app/pages/details_page.dart';
 import 'package:dating_app/pages/user_buttons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key key, this.firebaseUser}) : super(key: key);
+  const MainPage({Key key}) : super(key: key);
 
-  final FirebaseUser firebaseUser;
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -63,7 +61,6 @@ class _MainPageState extends State<MainPage> {
                           MaterialPageRoute(
                             builder: (context) => DetailsPage(
                               tinderUser: snapshot.data,
-                              myUser: widget.firebaseUser,
                             ),
                           ),
                         );

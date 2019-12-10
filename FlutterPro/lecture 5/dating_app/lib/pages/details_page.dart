@@ -1,5 +1,5 @@
 import 'package:dating_app/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dating_app/utils/curent_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
@@ -7,10 +7,9 @@ import 'package:location_permissions/location_permissions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DetailsPage extends StatelessWidget {
-  DetailsPage({Key key, this.myUser, this.tinderUser}) : super(key: key);
+  DetailsPage({Key key, this.tinderUser}) : super(key: key);
 
   final User tinderUser;
-  final FirebaseUser myUser;
   final databaseReference = Firestore.instance;
 
   @override
@@ -75,6 +74,7 @@ class DetailsPage extends StatelessWidget {
   }
 
   Future<void> _likeUser() async {
+    final myUser = UserProvider.getCurentUser();
     await databaseReference
         .collection('users')
         .document(myUser.uid)

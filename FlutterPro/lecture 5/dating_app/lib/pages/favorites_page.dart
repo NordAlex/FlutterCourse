@@ -5,11 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesPage extends StatelessWidget {
-  FavoritesPage(this.currentUser);
+  FavoritesPage();
 
-  final FirebaseUser currentUser;
-  final databaseReference = Firestore.instance;
+  final _databaseReference = Firestore.instance;
+  final _firebaseAuth = FirebaseAuth.instance;
 
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +34,7 @@ class FavoritesPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () =>
-                            _showUserDetails(context, user, currentUser));
+                            _showUserDetails(context, user));
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
@@ -44,7 +45,8 @@ class FavoritesPage extends StatelessWidget {
   }
 
   Future<List<User>> _fetchFavorites() async {
-    final favoriteQuery = await databaseReference
+    final currentUser = await _firebaseAuth.currentUser();
+    final favoriteQuery = await _databaseReference
         .collection('users')
         .document(currentUser.uid)
         .collection('favorites')
@@ -58,12 +60,11 @@ class FavoritesPage extends StatelessWidget {
   }
 
   void _showUserDetails(
-      BuildContext context, User selectedUser, FirebaseUser currentUser) {
+      BuildContext context, User selectedUser) {
     Navigator.of(context).push<void>(
       MaterialPageRoute(
         builder: (context) => DetailsPage(
           tinderUser: selectedUser,
-          myUser: currentUser,
         ),
       ),
     );
