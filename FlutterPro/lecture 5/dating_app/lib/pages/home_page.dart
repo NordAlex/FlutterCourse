@@ -12,16 +12,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _appTitle = 'Dating App';
   int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Dating App';
     final currentTab = [
       MainPage(
         firebaseUser: widget._curentUser,
@@ -31,7 +26,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(appTitle),
+        title: Text(_appTitle),
       ),
       body: Center(
         child: currentTab.elementAt(_selectedIndex),
@@ -52,5 +47,11 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

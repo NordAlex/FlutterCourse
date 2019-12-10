@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class FavoritesPage extends StatelessWidget {
   FavoritesPage(this.currentUser);
+
   final FirebaseUser currentUser;
   final databaseReference = Firestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,12 +49,11 @@ class FavoritesPage extends StatelessWidget {
         .document(currentUser.uid)
         .collection('favorites')
         .getDocuments();
-    final users = <User>{};
 
+    final users = <User>{};
     for (var item in favoriteQuery.documents) {
       users.add(User.fromCloudStorage(item.data));
     }
-
     return users.toList();
   }
 
