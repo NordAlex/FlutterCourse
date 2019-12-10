@@ -61,19 +61,51 @@ class LoginPage extends StatelessWidget {
         final authResult = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
         _navigateToMain(context, authResult.user);
-      } catch (ERROR_USER_NOT_FOUND) {
-        try{
-
-        final authResult = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
-        _navigateToMain(context, authResult.user);
-        }
-        catch(e)
-        {
-          print(e.toString());
+      } catch (e) {
+        switch (e.code) {
+          case 'ERROR_USER_NOT_FOUND':
+            await _signInNewUser(context);
+            break;
+          default:
+            await _showErrorMessage(context, e.message);
+            break;
         }
       }
     }
+  }
+
+  Future<void> _signInNewUser(BuildContext context) async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final _auth = FirebaseAuth.instance;
+    try {
+      final authResult = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      _navigateToMain(context, authResult.user);
+    } catch (e) {
+        await _showErrorMessage(context, e.message);
+      }
+    }
+  
+
+  Future<void> _showErrorMessage(BuildContext context, String message) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('oh vey'),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _navigateToMain(BuildContext context, FirebaseUser user) {
